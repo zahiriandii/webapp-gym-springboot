@@ -9,7 +9,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-5">
-                <form th:action="'/products/edit/'+${product.getId()}" method="POST">
+                <form action="/products/add" method="POST">
                     <input id="id" type="hidden" name="id"
                            th:value="(${product} != null ? ${product.getId()} : '')">
                     <div class="form-group">
