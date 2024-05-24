@@ -26,13 +26,12 @@ public class User
     @OneToMany(fetch = FetchType.EAGER)
     private List<ShoppingCart> shoppingCartList;
 
-    public User(Long id, String username, String name, String surname, String password, LocalDate dateOfBirth) {
-        this.id = id;
+    public User( String username, String name, String surname, String password) {
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.password = password;
-        this.dateOfBirth = dateOfBirth;
+       // this.dateOfBirth = dateOfBirth;
     }
 
     public User ()

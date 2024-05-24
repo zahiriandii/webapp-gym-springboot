@@ -39,7 +39,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
         return this.shoppingCartRepository.findByUserUsernameAndStatus(username, ShoppingCartStatus.CREATED)
                 .orElseGet(()->{
-                    User user = this.userRepository.findByUsername(username);
+                    User user = this.userRepository.findByUsername(username).get();
                     ShoppingCart shoppingCart = new ShoppingCart(user);
                     return this.shoppingCartRepository.save(shoppingCart);
                 });
