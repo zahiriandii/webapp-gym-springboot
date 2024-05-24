@@ -17,4 +17,5 @@ public interface ShoppingCartRepository extends JpaRepository<ShoppingCart,Long>
     Optional<ShoppingCart> findByUserUsernameAndStatus(String user, ShoppingCartStatus status);
 
     List<ShoppingCart> findByDateCreatedBetween(LocalDateTime from, LocalDateTime to);
+    void deleteProductById (Long id);
 }

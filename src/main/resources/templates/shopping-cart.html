@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<div xmlns:th="http://www.thymeleaf.org" xmlns:sec="">
+<div xmlns:th="http://www.thymeleaf.org" >
     <section class="jumbotron text-center">
         <div class="container">
             <h1 class="jumbotron-heading">WEB PROGRAMMING SHOP</h1>
@@ -16,29 +16,31 @@
                         <tr>
                             <th scope="col">Product</th>
                             <th scope="col">Price</th>
-                            <th scope="col">Manufacturer</th>
-                            <th scope="col">Category</th>
+                            <th scope="col">Quantity</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="product : ${products}">
                             <td th:text="${product.getName()}"></td>
                             <td th:text="${product.getPrice()}"></td>
-                            <td th:text="${product.getManufacturer() != null} ? ${product.getManufacturer().getName()} : 'No Manufacturer'"></td>
-                            <td th:text="${product.getCategory() != null} ? ${product.getCategory().getName()} : 'No Category'"></td>
+                            <td th:text="${product.getQuantity()}"></td>
+                            <td>
+                                <form th:action="@{'/shopping-cart/delete/{id}' (id=${product.getId()})}"
+                                      th:method="DELETE">
+                                    <button type="submit"
+                                            class="btn btn-sm btn-danger delete-product">
+                                        <i class="fas fa-trash-alt"></i> Delete
+                                    </button>
+                                </form>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
-            <h3>Cart Admin Panel</h3>
-            <div class="row">
-                <div class="col-md-3"><a href="/shopping-cart/filter">Filter Carts</a></div>
-                <div class="col-md-3"><a href="/shopping-cart/count">Count Carts for given user</a></div>
-                <div class="col-md-3"><a href="/shopping-cart/edit">Edit current cart</a></div>
-            </div>
-        </th:block>
+
+
+
     </div>
 </div>

@@ -81,4 +81,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public Optional<ShoppingCart> findById(Long id) {
         return this.shoppingCartRepository.findById(id);
     }
+
+    @Override
+    public void deleteProductById(Long id) {
+        Product product = this.productRepository.findById(id).get();
+        this.shoppingCartRepository.deleteProductById(id);
+    }
 }

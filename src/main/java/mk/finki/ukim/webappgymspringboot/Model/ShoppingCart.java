@@ -13,6 +13,7 @@ import java.util.List;
 
 @Data
 @Entity
+@Table(name="shopping_cart")
 public class ShoppingCart
 {
 
@@ -24,6 +25,7 @@ public class ShoppingCart
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dateCreated;
     @ManyToMany
+    @JoinTable(name = "shopping_cart_products")
     private List<Product> products = new ArrayList<>();
     @Enumerated(EnumType.STRING)
     private ShoppingCartStatus status;

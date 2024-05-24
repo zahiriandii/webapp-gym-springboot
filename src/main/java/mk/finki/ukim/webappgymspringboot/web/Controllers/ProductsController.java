@@ -33,7 +33,7 @@ public class ProductsController
         return "master-template";
     }
 
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public String deleteProduct (@PathVariable Long id)
     {
         this.productService.deleteById(id);
