@@ -29,7 +29,7 @@ public class ProductsController
         }
         List<Product> products = this.productService.findAll();
         model.addAttribute("products",products);
-        model.addAttribute("bodyContent","products");
+        model.addAttribute("bodyContent","products-square");
         return "master-template";
     }
 
