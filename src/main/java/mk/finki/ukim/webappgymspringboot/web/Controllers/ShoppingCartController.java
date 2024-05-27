@@ -1,8 +1,10 @@
 package mk.finki.ukim.webappgymspringboot.web.Controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import mk.finki.ukim.webappgymspringboot.Model.Product;
 import mk.finki.ukim.webappgymspringboot.Model.ShoppingCart;
+import mk.finki.ukim.webappgymspringboot.Model.User;
 import mk.finki.ukim.webappgymspringboot.Service.AuthenticationService;
 import mk.finki.ukim.webappgymspringboot.Service.ProductService;
 import mk.finki.ukim.webappgymspringboot.Service.ShoppingCartService;
@@ -26,14 +28,21 @@ public class ShoppingCartController
     }
 
     @GetMapping
-    private String getShopppingCartPage(@RequestParam(required = false) String error, Model model, HttpServletRequest req)
+    private String getShoppingCartPage(@RequestParam(required = false) String error, Model model, HttpServletRequest req)
     {
         if (error != null && !error.isEmpty()) {
             model.addAttribute("hasError", true);
             model.addAttribute("error", error);
         }
-        String username = req.getRemoteUser();
-        ShoppingCart shoppingCart = this.shoppingCartService.getActiveShoppingCart(username);
+
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("user");
+
+        if (user == null) {
+            return "redirect:/logIn";
+        }
+
+        ShoppingCart shoppingCart = this.shoppingCartService.getActiveShoppingCart(user.getUsername());
         model.addAttribute("products",this.shoppingCartService.listAllProductsInShoppingCart(shoppingCart.getId()));
         model.addAttribute("bodyContent","shopping-cart");
         return "master-template";
@@ -44,8 +53,8 @@ public class ShoppingCartController
     @PostMapping("/add-product/{id}")
     public String addProductToShoppingCart(@PathVariable Long id, HttpServletRequest req)
     {
-        String username = req.getRemoteUser();
-        this.shoppingCartService.addProductToShoppingCart(username,id);
+        User username = (User) req.getSession().getAttribute("user");
+        this.shoppingCartService.addProductToShoppingCart(username.getUsername(),id);
         return "redirect:/products";
     }
 

@@ -1,6 +1,9 @@
 package mk.finki.ukim.webappgymspringboot.web.Controllers;
 
+import mk.finki.ukim.webappgymspringboot.Model.Exceptions.InvalidArgumentsException;
+import mk.finki.ukim.webappgymspringboot.Model.Exceptions.PasswordsDoNotMatchException;
 import mk.finki.ukim.webappgymspringboot.Repository.UserRepository;
+import mk.finki.ukim.webappgymspringboot.Service.AuthenticationService;
 import mk.finki.ukim.webappgymspringboot.Service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class RegisterController
 {
 
-    private final UserService userService;
+    private final AuthenticationService authenticationService;
 
-    public RegisterController( UserService userService) {
-        this.userService = userService;
+    public RegisterController( AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
 
     }
 
@@ -35,7 +38,13 @@ public class RegisterController
                             @RequestParam String name ,
                             @RequestParam String surname)
     {
-        this.userService.register(username,name,surname,password,repeatedPassword);
-        return "redirect:/logIn";
+        try {
+            this.authenticationService.register(username, password, repeatedPassword, name, surname);
+            return "redirect:/logIn";
+        }
+        catch (InvalidArgumentsException | PasswordsDoNotMatchException exc)
+        {
+            return "redirect:/register?error=" + exc.getMessage();
+        }
     }
 }

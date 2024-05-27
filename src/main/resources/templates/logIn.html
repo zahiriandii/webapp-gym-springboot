@@ -13,8 +13,9 @@
                    required="">
         </p>
 
-        <div th:if="${param.error}" th:text="${param.error}" class="text-danger"></div>
-
+        <th:block th:if="${hasError}">
+            <div th:text="${error}" class="text-danger"></div>
+        </th:block>
         <div class="row">
             <div class="col-md-3">
                 <button id="submit" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>

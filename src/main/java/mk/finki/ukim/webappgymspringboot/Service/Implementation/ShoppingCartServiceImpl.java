@@ -1,6 +1,7 @@
 package mk.finki.ukim.webappgymspringboot.Service.Implementation;
 
 import mk.finki.ukim.webappgymspringboot.Model.Enumerations.ShoppingCartStatus;
+import mk.finki.ukim.webappgymspringboot.Model.Exceptions.UserNotFoundException;
 import mk.finki.ukim.webappgymspringboot.Model.Product;
 import mk.finki.ukim.webappgymspringboot.Model.ShoppingCart;
 import mk.finki.ukim.webappgymspringboot.Model.User;
@@ -39,7 +40,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
         return this.shoppingCartRepository.findByUserUsernameAndStatus(username, ShoppingCartStatus.CREATED)
                 .orElseGet(()->{
-                    User user = this.userRepository.findByUsername(username).get();
+                    User user = this.userRepository.findByUsername(username)
+                            .orElseThrow(()->new UserNotFoundException(username));
                     ShoppingCart shoppingCart = new ShoppingCart(user);
                     return this.shoppingCartRepository.save(shoppingCart);
                 });

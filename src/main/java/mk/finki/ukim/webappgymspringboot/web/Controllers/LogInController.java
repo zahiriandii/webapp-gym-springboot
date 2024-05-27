@@ -31,9 +31,17 @@ public class LogInController
     @PostMapping
     public String logIn (HttpServletRequest req , Model model)
     {
-        User user = null;
-
+        User user= null;
+        try {
             user = this.authenticationService.login(req.getParameter("username"), req.getParameter("password"));
+        }
+        catch (InvalidArgumentsException | InvalidUserCredentialsException exc)
+        {
+            model.addAttribute("hasError", true);
+            model.addAttribute("error", exc.getMessage());
+            model.addAttribute("bodyContent","logIn");
+            return "master-template";
+        }
 
         req.getSession().setAttribute("user",user);
         return "redirect:/products";

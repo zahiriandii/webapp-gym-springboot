@@ -23,7 +23,7 @@ public class User
     private String password;
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate dateOfBirth;
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany
     private List<ShoppingCart> shoppingCartList;
 
     public User( String username, String name, String surname, String password) {
