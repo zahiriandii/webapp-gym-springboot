@@ -1,6 +1,7 @@
 package mk.finki.ukim.webappgymspringboot.Repository;
 
 import mk.finki.ukim.webappgymspringboot.Model.Enumerations.ShoppingCartStatus;
+import mk.finki.ukim.webappgymspringboot.Model.Product;
 import mk.finki.ukim.webappgymspringboot.Model.ShoppingCart;
 import mk.finki.ukim.webappgymspringboot.Model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

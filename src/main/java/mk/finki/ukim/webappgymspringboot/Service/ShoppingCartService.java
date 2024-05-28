@@ -24,6 +24,6 @@ public interface ShoppingCartService {
 
     Optional<ShoppingCart> findById(Long id);
 
-    void deleteProductById(Long id);
+    ShoppingCart deleteProductById(Long id,String username);
 
 }

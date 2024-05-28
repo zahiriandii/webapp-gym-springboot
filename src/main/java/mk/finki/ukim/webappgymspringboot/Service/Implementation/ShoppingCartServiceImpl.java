@@ -85,8 +85,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public void deleteProductById(Long id) {
+    public ShoppingCart deleteProductById(Long id,String username) {
         Product product = this.productRepository.findById(id).get();
-        this.shoppingCartRepository.deleteProductById(id);
+        ShoppingCart cart = this.getActiveShoppingCart(username);
+
+        cart.getProducts().remove(product);
+        return this.shoppingCartRepository.save(cart);
     }
 }

@@ -59,9 +59,10 @@ public class ShoppingCartController
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteProductFromShoppingCart (@PathVariable Long id)
+    public String deleteProductFromShoppingCart (@PathVariable Long id,HttpServletRequest req)
     {
-        this.shoppingCartService.deleteProductById(id);
+        User username = (User) req.getSession().getAttribute("user");
+        this.shoppingCartService.deleteProductById(id, username.getUsername());
         return "redirect:/shopping-cart";
     }
 }
